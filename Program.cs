@@ -26,6 +26,8 @@ namespace mini_analizador_sintactico
         static void ejercicioUno(string texto)
         {
             Pila pila = new Pila();
+            pila.push(new NoTerminal(PilaElemen.SIMBOLO, "$0"));
+            pila.mostrarPila();
 
             int estado = INICIAL; 
             int d = 2;
@@ -45,8 +47,7 @@ namespace mini_analizador_sintactico
                         }
                         else if (c == '+')
                         {
-                            pila.push(SIMBOLO);
-                            pila.push(d);
+                            pila.push(new Terminal(SIMBOLO, lexema + d));
                             d++;
                             estado = INICIAL;
                             lexema = "";
@@ -58,8 +59,7 @@ namespace mini_analizador_sintactico
                             pila.vaciarPila();
 
                             Pila nuevaPila = new Pila();
-                            nuevaPila.push(E);
-                            nuevaPila.push(1);
+                            nuevaPila.push(new Estado(E, "$0E1"));
                             nuevaPila.mostrarPila();
                         }
                         else
@@ -76,8 +76,7 @@ namespace mini_analizador_sintactico
                         }
                         else
                         {
-                            pila.push(IDENTIFICADOR);
-                            pila.push(d);
+                            pila.push(new Terminal(IDENTIFICADOR, lexema + d));
                             d++;
                             estado = INICIAL;
                             lexema = "";
@@ -95,6 +94,8 @@ namespace mini_analizador_sintactico
         static void ejercicioDos(string texto)
         {
             Pila pila = new Pila();
+            pila.push(new NoTerminal(PilaElemen.SIMBOLO, "$0"));
+            pila.mostrarPila();
 
             int estado = INICIAL;
             int d2 = 2, d3 = 3;
@@ -114,8 +115,7 @@ namespace mini_analizador_sintactico
                         }
                         else if (c == '+')
                         {
-                            pila.push(SIMBOLO);
-                            pila.push(d3);
+                            pila.push(new Terminal(SIMBOLO, lexema + d3));
                             estado = INICIAL;
                             lexema = "";
 
@@ -126,8 +126,7 @@ namespace mini_analizador_sintactico
                             pila.vaciarPila();
 
                             Pila nuevaPila = new Pila();
-                            nuevaPila.push(E);
-                            nuevaPila.push(1);
+                            nuevaPila.push(new Estado(E, "$0E1"));
                             nuevaPila.mostrarPila();
                         }
                         else
@@ -144,8 +143,7 @@ namespace mini_analizador_sintactico
                         }
                         else
                         {
-                            pila.push(IDENTIFICADOR);
-                            pila.push(d2);
+                            pila.push(new Terminal(IDENTIFICADOR, lexema + d2));
                             estado = INICIAL;
                             lexema = "";
                             i--;
@@ -157,49 +155,6 @@ namespace mini_analizador_sintactico
                         break;
                 }
             }
-        }
-    }
-
-    class Pila
-    {
-        LinkedList<int> listaPila = new LinkedList<int>();
-
-        public Pila()
-        {
-            push(Program.SIGNOPESO);
-            push(Program.IDENTIFICADOR);
-        }
-
-        public void push(int x)
-        {
-            listaPila.AddLast(x);
-        }
-
-        public int top()
-        {
-            return listaPila.First.Value;
-        }
-
-        public int pop()
-        {
-            int x = listaPila.First.Value;
-            listaPila.Remove(x);
-
-            return x;
-        }
-
-        public void vaciarPila()
-        {
-            listaPila.Clear();
-        }
-
-        public void mostrarPila()
-        {
-            foreach (int dato in listaPila)
-            {
-                Console.Write(dato + " ");
-            }
-            Console.WriteLine("\n");
         }
     }
 }
